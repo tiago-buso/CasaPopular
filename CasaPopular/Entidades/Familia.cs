@@ -12,6 +12,8 @@ namespace CasaPopular.Entidades
         public double RendaTotal { get; private set; }
         public List<Dependente> Dependentes { get; private set; }
 
+        public IPontuacao Pontuacao { get; private set; }
+
         public Familia (string nome, double rendaTotal)
         {
             ValidarNome(nome);
@@ -60,6 +62,18 @@ namespace CasaPopular.Entidades
             else
             {
                 throw new Exception("Por favor, adicione um dependente válido");
+            }
+        }
+
+        public void AdicionarPontuacao(IPontuacao pontuacao)
+        {
+            if (pontuacao != null)
+            {
+                Pontuacao = pontuacao;
+            }
+            else
+            {
+                throw new Exception("Por favor, adicione uma pontuação válida");
             }
         }
     }
