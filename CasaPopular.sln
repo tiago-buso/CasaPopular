@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32328.378
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CasaPopular", "CasaPopular\CasaPopular.csproj", "{BB559DFC-62BF-46BE-BFB3-1547211D6F95}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB559DFC-62BF-46BE-BFB3-1547211D6F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB559DFC-62BF-46BE-BFB3-1547211D6F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB559DFC-62BF-46BE-BFB3-1547211D6F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB559DFC-62BF-46BE-BFB3-1547211D6F95}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EA286DA5-61A0-45CA-8E7D-F1113DB1EE88}
+	EndGlobalSection
+EndGlobal
