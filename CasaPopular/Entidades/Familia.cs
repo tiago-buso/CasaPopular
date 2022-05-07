@@ -13,8 +13,7 @@ namespace CasaPopular.Entidades
         public string Nome { get; private set; }
         public double RendaTotal { get; private set; }
         public List<Dependente> Dependentes { get; private set; }
-
-        public IPontuacao Pontuacao { get; private set; }
+        public int PontuacaoFinal { get; private set; }
 
         public Familia (string nome, double rendaTotal)
         {
@@ -30,7 +29,8 @@ namespace CasaPopular.Entidades
         {
             InstanciarLista();
 
-            AddNotifications(new Contract().IsNull(dependente, "Por favor, adicione um dependente válido"));
+            AddNotifications(new Contract()
+                .IsNull(dependente, "Por favor, adicione um dependente válido"));
             
             Dependentes.Add(dependente);
         }        
@@ -41,18 +41,14 @@ namespace CasaPopular.Entidades
             {
                 Dependentes = new List<Dependente>();
             }
-        }       
+        }
 
-        public void AdicionarPontuacao(IPontuacao pontuacao)
+        public void AdicionarPontuacao(int pontuacao)
         {
-            if (pontuacao != null)
-            {
-                Pontuacao = pontuacao;
-            }
-            else
-            {
-                throw new Exception("Por favor, adicione uma pontuação válida");
-            }
+            AddNotifications(new Contract()                
+                .IsLowerThan(pontuacao, 0, "Por favor, insira uma pontuação válida"));
+
+            PontuacaoFinal += pontuacao;
         }
     }
 }
