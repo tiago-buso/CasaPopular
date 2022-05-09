@@ -12,15 +12,15 @@ namespace CasaPopularTest
     public class FamiliaTest
     {
 
-        [Fact(DisplayName = "Instânciar objeto Familia corretamente")]
+        [Fact(DisplayName = "Instanciar objeto Familia corretamente")]
         [Trait("Familia", "Testes de criação de famílias")]
         public void InstanciarFamiliaCorretamente()
         {
-            // Arrange && Arrange
+            // Arrange
             int rendaTotal = 1000;
             string nome = "Família teste 1";
 
-            //Arrange
+            //ACt
             Familia familia = new Familia(nome, rendaTotal);
 
             // Assert
@@ -31,15 +31,15 @@ namespace CasaPopularTest
         }
 
 
-        [Fact(DisplayName = "Instânciar objeto Familia incorretamente - nome inválido")]
+        [Fact(DisplayName = "Instanciar objeto Familia incorretamente - nome inválido")]
         [Trait("Familia", "Testes de criação de famílias")]
         public void InstanciarFamiliaIncorretamenteNomeInvalido()
         {
-            // Arrange && Arrange
+            //Arrange
             int rendaTotal = 1000;
             string nome = "";
 
-            //Arrange
+            //Act
             Familia familia = new Familia(nome, rendaTotal);
 
             // Assert
@@ -48,35 +48,35 @@ namespace CasaPopularTest
             familia.Notifications.Should().HaveCount(1);
         }
 
-        [Fact(DisplayName = "Instânciar objeto Familia incorretamente - renda total inválida")]
+        [Fact(DisplayName = "Instanciar objeto Familia incorretamente - renda total inválida")]
         [Trait("Familia", "Testes de criação de famílias")]
         public void InstanciarFamiliaIncorretamenteRendaTotalInvalida()
         {
-            // Arrange && Arrange
+            // Arrange
             int rendaTotal = -1;
             string nome = "Família teste 2";
 
-            //Arrange
+            //Act
             Familia familia = new Familia(nome, rendaTotal);
 
-            // Assert
+            //Assert
             familia.IsValid.Should().BeFalse();
             familia.Notifications.First(x => x.Key == "rendaTotal").Message.Should().Be("Por favor, insira uma renda válida", "Essa é a mensagem que passa para a notificação");
             familia.Notifications.Should().HaveCount(1);
         }
 
-        [Fact(DisplayName = "Instânciar objeto Familia incorretamente - nome e renda total inválidos")]
+        [Fact(DisplayName = "Instanciar objeto Familia incorretamente - nome e renda total inválidos")]
         [Trait("Familia", "Testes de criação de famílias")]
         public void InstanciarFamiliaIncorretamenteNomeERendaInvalido()
         {
-            // Arrange && Arrange
+            // Arrange
             int rendaTotal = -1;
             string nome = "";
 
-            //Arrange
+            //Act
             Familia familia = new Familia(nome, rendaTotal);
 
-            // Assert
+            //Assert
             familia.IsValid.Should().BeFalse();
             familia.Notifications.First(x => x.Key == "nome").Message.Should().Be("Por favor, insira um nome para a família", "Essa é a mensagem que passa para a notificação");
             familia.Notifications.First(x => x.Key == "rendaTotal").Message.Should().Be("Por favor, insira uma renda válida", "Essa é a mensagem que passa para a notificação");
@@ -87,16 +87,16 @@ namespace CasaPopularTest
         [Trait("Familia", "Testes de adicionar dependente a um objeto de Familia")]
         public void InstanciarFamiliaCorretamenteEAdicionarDependenteValido()
         {
-            // Arrange && Arrange
+            // Arrange
             int rendaTotal = 1000;
             string nome = "Teste família 3";
             Dependente dependente = new Dependente("Dependente teste 1", 10);
 
-            //Arrange
+            //Act
             Familia familia = new Familia(nome, rendaTotal);
             familia.AdicionarDependente(dependente);
 
-            // Assert
+            //Assert
             familia.IsValid.Should().BeTrue();            
             familia.Notifications.Should().HaveCount(0);
             familia.Dependentes.Should().HaveCount(1);
@@ -106,15 +106,15 @@ namespace CasaPopularTest
         [Trait("Familia", "Testes de adicionar dependente a um objeto de Familia")]
         public void InstanciarFamiliaCorretamenteEAdicionarDependenteInvalido()
         {
-            // Arrange && Arrange
+            // Arrange
             int rendaTotal = 1000;
             string nome = "Teste família 3";            
 
-            //Arrange
+            //Act
             Familia familia = new Familia(nome, rendaTotal);
             familia.AdicionarDependente(null);
 
-            // Assert
+            //Assert
             familia.IsValid.Should().BeFalse();
             familia.Notifications.Should().HaveCount(1);
             familia.Notifications.First(x => x.Key == "dependente").Message.Should().Be("Por favor, adicione um dependente válido", "Essa é a mensagem que passa para a notificação");
@@ -125,16 +125,16 @@ namespace CasaPopularTest
         [Trait("Familia", "Testes de adicionar pontuação a um objeto de Familia")]
         public void InstanciarFamiliaCorretamenteEAdicionarPontuacaoValida()
         {
-            // Arrange && Arrange
+            // Arrange
             int rendaTotal = 1000;
             string nome = "Teste família 3";
             int pontuacao = 8;
 
-            //Arrange
+            //Act
             Familia familia = new Familia(nome, rendaTotal);
             familia.AdicionarPontuacao(pontuacao);
 
-            // Assert
+            //Assert
             familia.IsValid.Should().BeTrue();
             familia.Notifications.Should().HaveCount(0);
             familia.PontuacaoFinal.Should().Be(8);
@@ -144,16 +144,16 @@ namespace CasaPopularTest
         [Trait("Familia", "Testes de adicionar dependente a um objeto de Familia")]
         public void InstanciarFamiliaCorretamenteEAdicionarPontuacaoInvalidaNegativa()
         {
-            // Arrange && Arrange
+            // Arrange
             int rendaTotal = 1000;
             string nome = "Teste família 3";
             int pontuacao = -1;
 
-            //Arrange
+            //Act
             Familia familia = new Familia(nome, rendaTotal);
             familia.AdicionarPontuacao(pontuacao);
 
-            // Assert
+            //Assert
             familia.IsValid.Should().BeFalse();
             familia.Notifications.Should().HaveCount(1);
             familia.Notifications.First(x => x.Key == "pontuacao").Message.Should().Be("Por favor, insira uma pontuação válida", "Essa é a mensagem que passa para a notificação");            
