@@ -1,36 +1,23 @@
 ﻿using CasaPopular.Entidades;
 using CasaPopular.Entidades.Pontuacoes;
+using CasaPopular.Servicos;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CasaPopular
 {
     public class Program
     {
         static void Main(string[] args)
-        {            
+        {
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
             List<Familia> familias = CriadorDeFamilias();
 
-            foreach (Familia familia in familias)
-            {
-                PontuacaoRenda pontuacaoRenda = new PontuacaoRenda();
-                PontuacaoDependentes pontuacaoDependentes = new PontuacaoDependentes();
+            var pontuacaoServico = serviceProvider.GetService<IPontuacaoServico>();
 
-                int pontosRenda = pontuacaoRenda.CalcularPontuacao(familia);
-                int pontosDependentes = pontuacaoDependentes.CalcularPontuacao(familia);
-
-                familia.AdicionarPontuacao(pontosRenda);
-                familia.AdicionarPontuacao(pontosDependentes);
-            }
-
-            int posicao = 1;
-            foreach (var familiaOrdenadaPorPontuacao in familias.OrderByDescending(x => x.PontuacaoFinal))
-            {
-                Console.WriteLine("#####################");
-                Console.WriteLine($"Família na posição {posicao}: {familiaOrdenadaPorPontuacao.Nome}");
-                Console.WriteLine($"Pontuação Final: {familiaOrdenadaPorPontuacao.PontuacaoFinal}");
-                Console.WriteLine("#####################");
-
-                posicao++;
-            }
+            pontuacaoServico.CalcularPontuacaoDasFamilias(familias);
 
             Console.ReadLine();
 
@@ -68,6 +55,11 @@ namespace CasaPopular
             return familias;
         }
 
-       
+        //Injeção de dependência
+        private static void ConfigureServices(IServiceCollection services)
+        {
+            services.AddScoped<IRanking, Ranking>();
+            services.AddScoped<IPontuacaoServico, PontuacaoServico>();
+        }
     }
 }
