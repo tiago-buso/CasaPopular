@@ -1,10 +1,5 @@
-﻿using Flunt.Br;
-using Flunt.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Flunt.Notifications;
+using Flunt.Validations;
 
 namespace CasaPopular.Entidades
 {
@@ -17,22 +12,36 @@ namespace CasaPopular.Entidades
 
         public Familia (string nome, double rendaTotal)
         {
-            AddNotifications(new Contract()
-                .IsNotNullOrEmpty(nome, "Por favor, insira um nome para a família")
-                .IsLowerThan(rendaTotal, 0, "Por favor, insira uma renda válida"));                                 
+            if (string.IsNullOrEmpty(nome))
+            {
+                AddNotification("nome", "Por favor, insira um nome para a família");
+            }
+
+            if (rendaTotal < 0)
+            {
+                AddNotification("rendaTotal", "Por favor, insira uma renda válida");
+            }                                        
             
-            Nome = nome;
-            RendaTotal = rendaTotal;
+            if (this.IsValid)
+            {
+                Nome = nome;
+                RendaTotal = rendaTotal;
+            }            
         }    
 
         public void AdicionarDependente(Dependente dependente)
         {
             InstanciarLista();
 
-            AddNotifications(new Contract()
-                .IsNull(dependente, "Por favor, adicione um dependente válido"));
+            if (dependente == null)
+            {
+                AddNotification("dependente", "Por favor, adicione um dependente válido");
+            }
             
-            Dependentes.Add(dependente);
+            if (this.IsValid)
+            {
+                Dependentes.Add(dependente);
+            }            
         }        
 
         private void InstanciarLista()
@@ -45,10 +54,15 @@ namespace CasaPopular.Entidades
 
         public void AdicionarPontuacao(int pontuacao)
         {
-            AddNotifications(new Contract()                
-                .IsLowerThan(pontuacao, 0, "Por favor, insira uma pontuação válida"));
+            if (pontuacao < 0)
+            {
+                AddNotification("pontuacao", "Por favor, insira uma pontuação válida");
+            }           
 
-            PontuacaoFinal += pontuacao;
+            if (this.IsValid)
+            {
+                PontuacaoFinal += pontuacao;
+            }            
         }
     }
 }

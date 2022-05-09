@@ -1,10 +1,5 @@
-﻿using Flunt.Br;
-using Flunt.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Flunt.Notifications;
+using Flunt.Validations;
 
 namespace CasaPopular.Entidades
 {
@@ -14,13 +9,22 @@ namespace CasaPopular.Entidades
         public int Idade { get; private set; }
 
         public Dependente(string nome, int idade)
-        {
-            AddNotifications(new Contract()
-                .IsNotNullOrEmpty(nome, "Por favor, insira um nome para o dependente")
-                .IsNotBetween(Idade, 0, 140, "Por favor, insira uma idade válida"));                  
+        {            
+            if (string.IsNullOrEmpty(nome))
+            {
+                AddNotification("nome", "Por favor, insira um nome para o dependente");
+            }
 
-            Nome = nome;
-            Idade = idade;
+            if (idade < 0 || idade > 140)
+            {
+                AddNotification("idade", "Por favor, insira uma idade válida");
+            }
+            
+            if (this.IsValid)
+            {
+                Nome = nome;
+                Idade = idade;
+            }            
         }          
     }
 }

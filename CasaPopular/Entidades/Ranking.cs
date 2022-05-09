@@ -1,14 +1,7 @@
-﻿using Flunt.Br;
-using Flunt.Notifications;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace CasaPopular.Entidades
 {
-    public class Ranking : Notifiable<Notification>, IRanking
+    public class Ranking : IRanking
     {
        public void MostrarResultado(List<Familia> familias)
        {
